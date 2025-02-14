@@ -38,7 +38,6 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         final router = AppRouter.createRouter(context, state);
-
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: router,

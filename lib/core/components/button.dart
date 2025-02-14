@@ -5,7 +5,7 @@ Widget myButton({
   double width = double.infinity,
   color = AppColors.primaryColor,
   bool isUpperCase = true,
-  required Function onPressed,
+  required VoidCallback onPressed,  // Use VoidCallback instead of Function
   required String text,
 }) =>
     Container(
@@ -17,7 +17,7 @@ Widget myButton({
       ),
       //color: AppColors.primaryColor,
       child: MaterialButton(
-        onPressed: onPressed(),
+        onPressed: onPressed,
         child: Text(
           isUpperCase ? text.toUpperCase() : text,
           style: const TextStyle(
