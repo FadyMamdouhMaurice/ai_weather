@@ -10,16 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:ai_weather/main.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     final sharedPreferences = await SharedPreferences.getInstance();
-    final router = await AppRouter.createRouter();
 
-    await tester.pumpWidget(MyApp(sharedPreferences: sharedPreferences, router: router ,));
+    await tester.pumpWidget(MyApp(sharedPreferences: sharedPreferences,));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

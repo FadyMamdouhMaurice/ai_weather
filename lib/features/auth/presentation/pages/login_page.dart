@@ -1,9 +1,11 @@
+import 'package:ai_weather/core/helper/shared_Preference_helper.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/password_visibility_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ai_weather/core/components/button.dart';
 import 'package:ai_weather/core/components/textfeild.dart';
 import 'package:ai_weather/core/localization/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -11,9 +13,21 @@ class LoginPage extends StatelessWidget {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
 
+
+    void _logout(BuildContext context) async {
+      await SharedPrefsHelper.logout();
+      context.go('/');
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)?.translate('title') ?? 'Default Title'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () => _logout(context),
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(

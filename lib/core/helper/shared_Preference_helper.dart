@@ -15,11 +15,11 @@ class SharedPrefsHelper {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(isLoggedInKey, isLoggedIn);
   }
+
   static Future<void> saveUser(UserModel user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(userKey, user.toJson().toString());
   }
-
 
   static Future<UserModel?> getUser() async {
     final prefs = await SharedPreferences.getInstance();
@@ -29,4 +29,11 @@ class SharedPrefsHelper {
     }
     return null;
   }
+
+  static Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(isLoggedInKey);
+    await prefs.remove(userKey);
+  }
+
 }
