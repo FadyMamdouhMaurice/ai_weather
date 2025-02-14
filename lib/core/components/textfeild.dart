@@ -1,3 +1,4 @@
+import 'package:ai_weather/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 Widget myTextFeild({
@@ -25,7 +26,7 @@ Widget myTextFeild({
         onChanged: (value) {
           onChanged?.call(value); // call onChanged callback
         },
-        style: const TextStyle(color: Colors.black, fontSize: 20),
+        style: const TextStyle(color: AppColors.textPrimaryColor, fontSize: 20),
         decoration: InputDecoration(
           suffixIcon: suffixIcon != null
               ? IconButton(
@@ -36,14 +37,14 @@ Widget myTextFeild({
           ) : null,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.black)),
+              borderSide: const BorderSide(color: AppColors.borderColor)),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(
-                color: Colors.black), // White border color when focused
+                color: AppColors.borderColor),
           ),
           hintText: lableText,
-          hintStyle: const TextStyle(color: Colors.grey, fontSize: 15),
+          hintStyle: const TextStyle(color: AppColors.hintTextColor, fontSize: 15),
         ),
       ),
     );

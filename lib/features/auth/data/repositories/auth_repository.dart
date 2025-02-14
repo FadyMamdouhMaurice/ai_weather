@@ -8,25 +8,20 @@ class AuthRepository {
 
   Future<UserModel?> login(String email, String password) async {
 
-    print("AuthRepository: Attempting login with $email"); // Debugging
-
     // Simulate network delay
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print("Login successful!"); // Debugging
-
       DocumentSnapshot userDoc = await _firestore
           .collection('users')
           .doc(userCredential.user!.uid)
           .get();
       return UserModel.fromJson(userDoc.data() as Map<String, dynamic>);
     } catch (e) {
-      print("Login failed, incorrect credentials."); // Debugging
       throw Exception('Login failed: $e');
     }
   }

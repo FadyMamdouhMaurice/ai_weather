@@ -1,4 +1,6 @@
 import 'package:ai_weather/core/helper/shared_Preference_helper.dart';
+import 'package:ai_weather/core/theme/colors.dart';
+import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_event.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_state.dart';
@@ -15,6 +17,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final gradientTheme = theme.extension<GradientThemeExtension>();
+
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
 
@@ -26,12 +31,9 @@ class LoginPage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthLoading) {
-          print("Logging in..."); // Debugging
         } else if (state is Authenticated) {
-          print("Login successful! Welcome ${state.user.email}");
           context.go('/home'); // Navigate to home after login
         } else if (state is AuthError) {
-          print("Login failed: ${state.message}");
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
@@ -48,16 +50,9 @@ class LoginPage extends StatelessWidget {
           ],
         ),
         body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFFFFFFFF), // Fully opaque white
-                Color(0xFFD9F7FF), // Light blue
-                Color(0xFF89C0F5), // Medium blue
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+          decoration: BoxDecoration(
+            gradient:
+            gradientTheme?.backgroundGradient, // Get gradient from theme
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),

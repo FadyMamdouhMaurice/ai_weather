@@ -1,4 +1,3 @@
-import 'package:ai_weather/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_state.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/password_visibility_cubit.dart';
 import 'package:ai_weather/features/auth/presentation/pages/home_page.dart';
@@ -31,15 +30,14 @@ class AppRouter {
         GoRoute(path: '/weather', builder: (context, state) => const WeatherPage()),
 
       ],
-      redirect: (context, state) {
-        final authState = context.read<AuthBloc>().state;
-        // If authenticated, start at /weather
+      /*redirect: (context, state) {
+        final authState = context.read<AuthBloc>().state;        // If authenticated, start at /weather
         if (authState is Authenticated) {
           return '/weather';
         }
         // If not authenticated, start at home
         return '/';
-      },
+      },*/
     );
   }
 }

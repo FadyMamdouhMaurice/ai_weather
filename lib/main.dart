@@ -37,7 +37,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
+        // If state is not ready, return a loading screen
+        if (state is AuthLoading) {
+          return const MaterialApp(
+            home: Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            ),
+          );
+        }
+        // Ensure GoRouter is initialized after we have auth state
         final router = AppRouter.createRouter(context, state);
+
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: router,
@@ -52,11 +62,16 @@ class MyApp extends StatelessWidget {
             Locale('ar', ''), // Arabic
           ],
           localeResolutionCallback: (locale, supportedLocales) {
-            return supportedLocales.contains(locale) ? locale : const Locale('en', '');
+            return supportedLocales.contains(locale)
+                ? locale
+                : const Locale('en', '');
           },
-          theme: ThemeData(
+          /*theme: ThemeData(
             primaryColor: AppColors.primaryColor,
-          ),
+          ),*/
+          themeMode: ThemeMode.system,
+          theme: AppColors.lightTheme,
+          darkTheme: AppColors.darkTheme,
         );
       },
     );

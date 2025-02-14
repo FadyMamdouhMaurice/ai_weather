@@ -1,26 +1,22 @@
 import 'package:ai_weather/core/components/button.dart';
+import 'package:ai_weather/core/theme/colors.dart';
+import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter/scheduler.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final gradientTheme = theme.extension<GradientThemeExtension>();
+
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFFFFFFFF), // Fully opaque white
-              Color(0xFF98a3ff), // Light blue
-              Color(0xFF7684ff), // Medium blue
-              Color(0xFF3e52ff),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+        decoration: BoxDecoration(
+          gradient:
+              gradientTheme?.backgroundGradient, // Get gradient from theme
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -28,22 +24,19 @@ class HomePage extends StatelessWidget {
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               Expanded(
-                child: Image.asset("assets/images/cloudy.png", width: double.infinity),
+                child: Image.asset("assets/images/cloudy.png",
+                    width: double.infinity),
               ),
               myButton(
                 onPressed: () {
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    context.go('/signup'); // Navigate to Signup Page
-                  });
+                  GoRouter.of(context).go('/signup'); // Explicitly use GoRouter
                 },
                 text: "Sign Up",
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               myButton(
                 onPressed: () {
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    context.go('/login'); // Navigate to Login Page
-                  });
+                  GoRouter.of(context).go('/login'); // Explicitly use GoRouter
                 },
                 text: "Sign in",
               ),

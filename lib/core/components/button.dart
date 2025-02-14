@@ -12,16 +12,14 @@ Widget myButton({
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        //color: AppColors.primaryColor,
-        color: Colors.white,
+        color: AppColors.surfaceColor,
       ),
-      //color: AppColors.primaryColor,
       child: MaterialButton(
         onPressed: onPressed,
         child: Text(
           isUpperCase ? text.toUpperCase() : text,
           style: const TextStyle(
-            color: AppColors.primaryColor,
+            color: AppColors.textPrimaryColor,
           ),
         ),
       ),
