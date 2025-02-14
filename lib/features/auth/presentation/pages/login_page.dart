@@ -1,5 +1,4 @@
 import 'package:ai_weather/core/helper/shared_Preference_helper.dart';
-import 'package:ai_weather/core/theme/colors.dart';
 import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_event.dart';
@@ -62,7 +61,7 @@ class LoginPage extends StatelessWidget {
                 myTextFeild(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
-                  lableText: 'Email',
+                  lableText: AppLocalizations.of(context)!.translate('Email'),
                 ),
                 const SizedBox(height: 16),
                 BlocBuilder<PasswordVisibilityCubit, bool>(
@@ -70,7 +69,7 @@ class LoginPage extends StatelessWidget {
                     return myTextFeild(
                       controller: passwordController,
                       keyboardType: TextInputType.visiblePassword,
-                      lableText: 'Password',
+                      lableText: AppLocalizations.of(context)!.translate('Password'),
                       isObscure: isObscure,
                       suffixIcon:
                           isObscure ? Icons.visibility_off : Icons.visibility,
@@ -88,7 +87,7 @@ class LoginPage extends StatelessWidget {
                               emailController.text, passwordController.text),
                         );
                   },
-                  text: 'Login',
+                  text: AppLocalizations.of(context)!.translate('Login'),
                 ),
               ],
             ),

@@ -66,9 +66,6 @@ class MyApp extends StatelessWidget {
                 ? locale
                 : const Locale('en', '');
           },
-          /*theme: ThemeData(
-            primaryColor: AppColors.primaryColor,
-          ),*/
           themeMode: ThemeMode.system,
           theme: AppColors.lightTheme,
           darkTheme: AppColors.darkTheme,

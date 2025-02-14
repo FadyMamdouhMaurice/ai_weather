@@ -1,3 +1,4 @@
+import 'package:ai_weather/core/localization/app_localizations.dart';
 import 'package:ai_weather/core/theme/colors.dart';
 import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class SignupPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up',
+        title: Text(AppLocalizations.of(context)!.translate('SignUp'),
             style: TextStyle(color: AppColors.textPrimaryColor)),
         actions: [
           IconButton(
@@ -45,11 +46,11 @@ class SignupPage extends StatelessWidget {
               myTextFeild(
                   controller: nameController,
                   keyboardType: TextInputType.text,
-                  lableText: "Name"),
+                  lableText: AppLocalizations.of(context)!.translate('Name')),
               myTextFeild(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
-                lableText: 'Email',
+                lableText: AppLocalizations.of(context)!.translate('Email'),
               ),
               const SizedBox(height: 16),
               BlocBuilder<PasswordVisibilityCubit, bool>(
@@ -57,7 +58,7 @@ class SignupPage extends StatelessWidget {
                   return myTextFeild(
                     controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
-                    lableText: 'Password',
+                    lableText: AppLocalizations.of(context)!.translate('Password'),
                     isObscure: isObscure,
                     suffixIcon:
                         isObscure ? Icons.visibility_off : Icons.visibility,
@@ -73,7 +74,7 @@ class SignupPage extends StatelessWidget {
                   return myTextFeild(
                     controller: confirmPasswordController,
                     keyboardType: TextInputType.visiblePassword,
-                    lableText: 'Confirm Password',
+                    lableText: AppLocalizations.of(context)!.translate('ConfirmPassword'),
                     isObscure: isObscure,
                     suffixIcon:
                         isObscure ? Icons.visibility_off : Icons.visibility,
@@ -86,13 +87,13 @@ class SignupPage extends StatelessWidget {
               myTextFeild(
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
-                  lableText: "Phone"),
+                  lableText: AppLocalizations.of(context)!.translate('Phone')),
               const Expanded(child: SizedBox(height: 24)),
               myButton(
                 onPressed: () {
                   // Handle sign-up logic
                 },
-                text: 'Sign Up',
+                text: AppLocalizations.of(context)!.translate('SignUp'),
               ),
             ],
           ),

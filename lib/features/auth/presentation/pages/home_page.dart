@@ -1,5 +1,5 @@
 import 'package:ai_weather/core/components/button.dart';
-import 'package:ai_weather/core/theme/colors.dart';
+import 'package:ai_weather/core/localization/app_localizations.dart';
 import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -31,14 +31,14 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   GoRouter.of(context).go('/signup'); // Explicitly use GoRouter
                 },
-                text: "Sign Up",
+                text: AppLocalizations.of(context)!.translate('SignUp'),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               myButton(
                 onPressed: () {
                   GoRouter.of(context).go('/login'); // Explicitly use GoRouter
                 },
-                text: "Sign in",
+                text: AppLocalizations.of(context)!.translate('SignIn'),
               ),
             ],
           ),
