@@ -1,9 +1,7 @@
 import 'package:ai_weather/core/localization/app_localizations.dart';
 import 'package:ai_weather/core/theme/colors.dart';
 import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
-import 'package:ai_weather/features/auth/data/models/user_model.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_bloc.dart';
-import 'package:ai_weather/features/auth/presentation/blocs/auth_event.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_state.dart';
 import 'package:ai_weather/features/auth/presentation/viewmodels/register_viewmodel.dart';
 import 'package:flutter/material.dart';

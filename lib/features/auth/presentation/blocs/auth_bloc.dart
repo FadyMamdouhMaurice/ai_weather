@@ -17,22 +17,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this.authRepository, this.registerUseCase, this.loginUseCase, this.logoutUseCase) : super(AuthInitial()) {
     on<LoginEvent>((event, emit) async {
       emit(AuthLoading());
-      print("AuthBloc: LoginEvent received for email: ${event.email}");
 
       try {
         UserEntity? user = await loginUseCase.execute(event.email, event.password);
-        print("AuthBloc: LoginUseCase returned: $user");
 
         if (user != null) {
-          print("AuthBloc: Emitting Authenticated state...");
           emit(Authenticated(user));
-          print("AuthBloc: Authenticated state emitted.");
         } else {
-          print("AuthBloc: Emitting AuthError - User not found.");
           emit(AuthError("User not found"));
         }
       } catch (e) {
-        print("AuthBloc: Emitting AuthError - Exception: $e");
         emit(AuthError(e.toString()));
       }
     });

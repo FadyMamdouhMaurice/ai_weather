@@ -33,7 +33,6 @@ class AppRouter {
               BlocProvider.value(value: context.read<AuthBloc>()),
               ChangeNotifierProvider(
                   create: (context) {
-                    print("RegisterViewModel created");
                     return RegisterViewModel(context.read<AuthBloc>());
                   }
               ),

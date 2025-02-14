@@ -30,12 +30,9 @@ class LoginPage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthLoading) {
-          print("Auth is loading...");
         } else if (state is Authenticated) {
-          print("Login successful! Navigating to Weather Page...");
           context.go('/weather'); // Navigate to home after login
         } else if (state is AuthError) {
-          print("Auth Error: ${state.message}");
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );

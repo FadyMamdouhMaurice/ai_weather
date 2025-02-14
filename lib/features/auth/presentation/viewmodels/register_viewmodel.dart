@@ -11,38 +11,44 @@ class RegisterViewModel extends ChangeNotifier {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
   String? get name => nameController.text.isEmpty ? null : nameController.text;
-  String? get email => emailController.text.isEmpty ? null : emailController.text;
-  String? get password => passwordController.text.isEmpty ? null : passwordController.text;
-  String? get confirmPassword => confirmPasswordController.text.isEmpty ? null : confirmPasswordController.text;
-  String? get phone => phoneController.text.isEmpty ? null : phoneController.text;
+
+  String? get email =>
+      emailController.text.isEmpty ? null : emailController.text;
+
+  String? get password =>
+      passwordController.text.isEmpty ? null : passwordController.text;
+
+  String? get confirmPassword => confirmPasswordController.text.isEmpty
+      ? null
+      : confirmPasswordController.text;
+
+  String? get phone =>
+      phoneController.text.isEmpty ? null : phoneController.text;
 
   bool get isFormValid {
-    print("Checking form validity: name=$name, email=$email, phone=$phone, password=$password, confirm=$confirmPassword");
-    return name != null && email != null && phone != null && password != null && confirmPassword == password;
+    return name != null &&
+        email != null &&
+        phone != null &&
+        password != null &&
+        confirmPassword == password;
   }
+
   void register() {
     if (isFormValid) {
-      print("Register button clicked, form is valid.");
-
       final user = UserModel(
         userId: '',
         name: name!,
         email: email!,
         phone: phone!,
       );
-      print("Dispatching RegisterEvent...");
 
       authBloc.add(RegisterEvent(user, password!));
-      print("RegisterEvent added to AuthBloc.");
-
-    }
-    else {
-      print("Form is invalid. Check required fields.");
-    }
+    } else {}
   }
 
   void disposeControllers() {

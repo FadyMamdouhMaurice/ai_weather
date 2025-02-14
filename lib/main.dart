@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        print("MyApp: Received AuthState -> $state");
       },
       child: Builder(
         builder: (context) {
@@ -63,7 +62,7 @@ class MyApp extends StatelessWidget {
               Locale('en', ''), // English
               Locale('ar', ''), // Arabic
             ],
-            locale: Locale('en'),
+            locale: const Locale('en'),
             // Default locale
 
             /*localeResolutionCallback: (locale, supportedLocales) {
