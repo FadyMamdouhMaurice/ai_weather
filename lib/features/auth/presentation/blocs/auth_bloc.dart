@@ -1,30 +1,46 @@
-import 'package:ai_weather/features/auth/data/models/user_model.dart';
 import 'package:ai_weather/features/auth/data/repositories/auth_repository.dart';
+import 'package:ai_weather/features/auth/domain/entities/user.dart';
+import 'package:ai_weather/features/auth/domain/usecases/login_use_case.dart';
+import 'package:ai_weather/features/auth/domain/usecases/logout_use_case.dart';
+import 'package:ai_weather/features/auth/domain/usecases/register_use_case.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_event.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
+  final LoginUseCase loginUseCase;
+  final RegisterUseCase registerUseCase;
+  final LogoutUseCase logoutUseCase;
 
-  AuthBloc(this.authRepository) : super(AuthInitial()) {
+
+  AuthBloc(this.authRepository, this.registerUseCase, this.loginUseCase, this.logoutUseCase) : super(AuthInitial()) {
     on<LoginEvent>((event, emit) async {
       emit(AuthLoading());
+      print("AuthBloc: LoginEvent received for email: ${event.email}");
+
       try {
-        UserModel? user = await authRepository.login(event.email, event.password);
+        UserEntity? user = await loginUseCase.execute(event.email, event.password);
+        print("AuthBloc: LoginUseCase returned: $user");
+
         if (user != null) {
+          print("AuthBloc: Emitting Authenticated state...");
           emit(Authenticated(user));
+          print("AuthBloc: Authenticated state emitted.");
         } else {
+          print("AuthBloc: Emitting AuthError - User not found.");
           emit(AuthError("User not found"));
         }
       } catch (e) {
+        print("AuthBloc: Emitting AuthError - Exception: $e");
         emit(AuthError(e.toString()));
       }
     });
+
     on<RegisterEvent>((event, emit) async {
       emit(AuthLoading());
       try {
-        UserModel? user = await authRepository.register(event.user, event.password);
+        UserEntity? user = await registerUseCase.execute(event.user, event.password);
         if (user != null) {
           emit(Authenticated(user));
         } else {
@@ -34,8 +50,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthError(e.toString()));
       }
     });
+
     on<LogoutEvent>((event, emit) async {
-      await authRepository.logout();
+      await logoutUseCase.execute();
       emit(AuthInitial());
     });
   }

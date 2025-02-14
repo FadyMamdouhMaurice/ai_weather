@@ -2,6 +2,9 @@ import 'package:ai_weather/core/app_router/app_router.dart';
 import 'package:ai_weather/core/localization/app_localizations.dart';
 import 'package:ai_weather/core/theme/colors.dart';
 import 'package:ai_weather/features/auth/data/repositories/auth_repository.dart';
+import 'package:ai_weather/features/auth/domain/usecases/login_use_case.dart';
+import 'package:ai_weather/features/auth/domain/usecases/logout_use_case.dart';
+import 'package:ai_weather/features/auth/domain/usecases/register_use_case.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/auth_state.dart';
 import 'package:ai_weather/firebase_options.dart';
@@ -19,10 +22,13 @@ void main() async {
 
   final sharedPreferences = await SharedPreferences.getInstance();
   final authRepository = AuthRepository();
-
+  final registerUseCase = RegisterUseCase(authRepository);
+  final loginUseCase = LoginUseCase(authRepository);
+  final logoutUseCase = LogoutUseCase(authRepository);
   runApp(
     BlocProvider(
-      create: (context) => AuthBloc(authRepository),
+      create: (context) => AuthBloc(
+          authRepository, registerUseCase, loginUseCase, logoutUseCase),
       child: MyApp(sharedPreferences: sharedPreferences),
     ),
   );
@@ -35,42 +41,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        // If state is not ready, return a loading screen
-        if (state is AuthLoading) {
-          return const MaterialApp(
-            home: Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            ),
-          );
-        }
-        // Ensure GoRouter is initialized after we have auth state
-        final router = AppRouter.createRouter(context, state);
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        print("MyApp: Received AuthState -> $state");
+      },
+      child: Builder(
+        builder: (context) {
+          final router =
+              AppRouter.createRouter(context, context.read<AuthBloc>().state);
 
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: router,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en', ''), // English
-            Locale('ar', ''), // Arabic
-          ],
-          localeResolutionCallback: (locale, supportedLocales) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: router,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''), // English
+              Locale('ar', ''), // Arabic
+            ],
+            locale: Locale('en'),
+            // Default locale
+
+            /*localeResolutionCallback: (locale, supportedLocales) {
             return supportedLocales.contains(locale)
                 ? locale
                 : const Locale('en', '');
-          },
-          themeMode: ThemeMode.system,
-          theme: AppColors.lightTheme,
-          darkTheme: AppColors.darkTheme,
-        );
-      },
+          },*/
+            themeMode: ThemeMode.system,
+            theme: AppColors.lightTheme,
+            darkTheme: AppColors.darkTheme,
+          );
+        },
+      ),
     );
   }
 }

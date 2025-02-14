@@ -31,14 +31,14 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   GoRouter.of(context).go('/signup'); // Explicitly use GoRouter
                 },
-                text: AppLocalizations.of(context)!.translate('SignUp'),
+                text: AppLocalizations.of(context)?.translate('SignUp') ?? 'Sign Upppppppp',
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               myButton(
                 onPressed: () {
                   GoRouter.of(context).go('/login'); // Explicitly use GoRouter
                 },
-                text: AppLocalizations.of(context)!.translate('SignIn'),
+                text: AppLocalizations.of(context)?.translate('SignIn') ?? 'Sign Upppppppp',
               ),
             ],
           ),

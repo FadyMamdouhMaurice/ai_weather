@@ -5,3 +5,9 @@ class PasswordVisibilityCubit extends Cubit<bool> {
 
   void toggleVisibility() => emit(!state);
 }
+
+class ConfirmPasswordVisibilityCubit extends Cubit<bool> {
+  ConfirmPasswordVisibilityCubit() : super(true);
+
+  void toggleVisibility() => emit(!state);
+}

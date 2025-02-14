@@ -1,4 +1,4 @@
-import 'package:ai_weather/features/auth/data/models/user_model.dart';
+import 'package:ai_weather/features/auth/domain/entities/user.dart';
 
 abstract class AuthEvent {}
 class LoginEvent extends AuthEvent {
@@ -7,8 +7,10 @@ class LoginEvent extends AuthEvent {
   LoginEvent(this.email, this.password);
 }
 class RegisterEvent extends AuthEvent {
-  final UserModel user;
+  final UserEntity user;
   final String password;
   RegisterEvent(this.user, this.password);
 }
-class LogoutEvent extends AuthEvent {}
+class LogoutEvent extends AuthEvent {
+   LogoutEvent(); // Using 'const' for optimization
+}

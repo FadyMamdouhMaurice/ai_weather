@@ -5,7 +5,7 @@ Widget myButton({
   double width = double.infinity,
   color = AppColors.primaryColor,
   bool isUpperCase = true,
-  required VoidCallback onPressed,  // Use VoidCallback instead of Function
+  required VoidCallback? onPressed,
   required String text,
 }) =>
     Container(

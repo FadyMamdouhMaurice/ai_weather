@@ -6,7 +6,7 @@ class RegisterUseCase {
   final AuthRepository authRepository;
   RegisterUseCase(this.authRepository);
 
-  Future<UserEntity?> execute(UserEntity user, String password) {
+  Future<UserEntity?> execute(UserEntity user, String password) async{
     final userModel = UserModel(
       userId: user.userId,
       name: user.name,
