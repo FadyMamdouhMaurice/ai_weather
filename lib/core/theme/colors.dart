@@ -6,11 +6,11 @@ class AppColors {
 
   static ThemeData lightTheme = ThemeData(
     primaryColor: primaryColor,
-    colorScheme: ColorScheme.light(primary: primaryColor),
+    colorScheme: const ColorScheme.light(primary: primaryColor),
   );
 
   static ThemeData darkTheme = ThemeData(
     primaryColor: primaryColor,
-    colorScheme: ColorScheme.dark(primary: primaryColor),
+    colorScheme: const ColorScheme.dark(primary: primaryColor),
   );
 }

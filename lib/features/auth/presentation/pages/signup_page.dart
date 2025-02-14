@@ -5,6 +5,8 @@ import 'package:ai_weather/core/components/textfeild.dart';
 import 'package:ai_weather/features/auth/presentation/blocs/password_visibility_cubit.dart';
 
 class SignupPage extends StatelessWidget {
+  const SignupPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
@@ -13,10 +15,10 @@ class SignupPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
+        title: const Text('Sign Up'),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFFFFFFFF), // Fully opaque white
@@ -37,7 +39,7 @@ class SignupPage extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
                 lableText: 'Email',
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<PasswordVisibilityCubit, bool>(
                 builder: (context, isObscure) {
                   return myTextFeild(
@@ -50,7 +52,7 @@ class SignupPage extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<PasswordVisibilityCubit, bool>(
                 builder: (context, isObscure) {
                   return myTextFeild(
@@ -63,7 +65,7 @@ class SignupPage extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               myButton(
                 onPressed: () {
                   // Handle sign-up logic

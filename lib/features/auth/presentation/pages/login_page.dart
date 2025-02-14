@@ -8,13 +8,15 @@ import 'package:ai_weather/core/localization/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
 
 
-    void _logout(BuildContext context) async {
+    void logout(BuildContext context) async {
       await SharedPrefsHelper.logout();
       context.go('/');
     }
@@ -24,13 +26,13 @@ class LoginPage extends StatelessWidget {
         title: Text(AppLocalizations.of(context)?.translate('title') ?? 'Default Title'),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () => _logout(context),
+            icon: const Icon(Icons.logout),
+            onPressed: () => logout(context),
           ),
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFFFFFFFF), // Fully opaque white
@@ -51,7 +53,7 @@ class LoginPage extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
                 lableText: 'Email',
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               BlocBuilder<PasswordVisibilityCubit, bool>(
                 builder: (context, isObscure) {
                   return myTextFeild(
@@ -64,7 +66,7 @@ class LoginPage extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               myButton(
                 onPressed: () {},
                 text: 'Login',
