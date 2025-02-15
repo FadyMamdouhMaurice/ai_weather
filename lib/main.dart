@@ -19,7 +19,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  //Pull
+
   final sharedPreferences = await SharedPreferences.getInstance();
   final authRepository = AuthRepository();
   final registerUseCase = RegisterUseCase(authRepository);
