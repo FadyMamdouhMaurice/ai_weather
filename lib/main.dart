@@ -1,13 +1,15 @@
-import 'package:ai_weather/core/app_router/app_router.dart';
-import 'package:ai_weather/core/localization/app_localizations.dart';
-import 'package:ai_weather/core/theme/colors.dart';
-import 'package:ai_weather/features/auth/data/repositories/auth_repository.dart';
-import 'package:ai_weather/features/auth/domain/usecases/login_use_case.dart';
-import 'package:ai_weather/features/auth/domain/usecases/logout_use_case.dart';
-import 'package:ai_weather/features/auth/domain/usecases/register_use_case.dart';
-import 'package:ai_weather/features/auth/presentation/blocs/auth_bloc.dart';
-import 'package:ai_weather/features/auth/presentation/blocs/auth_state.dart';
-import 'package:ai_weather/firebase_options.dart';
+import 'package:ai_weather_cellula/core/app_router/app_router.dart';
+import 'package:ai_weather_cellula/core/localization/app_localizations.dart';
+import 'package:ai_weather_cellula/core/theme/colors.dart';
+import 'package:ai_weather_cellula/features/auth/data/repositories/auth_repository.dart';
+import 'package:ai_weather_cellula/features/auth/domain/usecases/login_use_case.dart';
+import 'package:ai_weather_cellula/features/auth/domain/usecases/logout_use_case.dart';
+import 'package:ai_weather_cellula/features/auth/domain/usecases/register_use_case.dart';
+import 'package:ai_weather_cellula/features/auth/presentation/blocs/auth_bloc.dart';
+import 'package:ai_weather_cellula/features/auth/presentation/blocs/auth_state.dart';
+import 'package:ai_weather_cellula/features/weather/data/repositories/weather_repository.dart';
+import 'package:ai_weather_cellula/features/weather/presentation/blocs/weather_cubit.dart';
+import 'package:ai_weather_cellula/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,16 +21,20 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  //Pull
+  //Pull request
   final sharedPreferences = await SharedPreferences.getInstance();
   final authRepository = AuthRepository();
   final registerUseCase = RegisterUseCase(authRepository);
   final loginUseCase = LoginUseCase(authRepository);
   final logoutUseCase = LogoutUseCase(authRepository);
+  final weatherRepository = WeatherRepository();
+
   runApp(
-    BlocProvider(
-      create: (context) => AuthBloc(
-          authRepository, registerUseCase, loginUseCase, logoutUseCase),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthBloc(authRepository, registerUseCase, loginUseCase, logoutUseCase)),
+        BlocProvider(create: (context) => WeatherCubit(weatherRepository)),  // Provide WeatherBloc globally
+      ],
       child: MyApp(sharedPreferences: sharedPreferences),
     ),
   );
@@ -37,7 +43,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final SharedPreferences sharedPreferences;
 
-  const MyApp({Key? key, required this.sharedPreferences}) : super(key: key);
+  const MyApp({super.key, required this.sharedPreferences});
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +68,7 @@ class MyApp extends StatelessWidget {
               Locale('en', ''), // English
               Locale('ar', ''), // Arabic
             ],
+            ///updade
             locale: const Locale('en'),
             // Default locale
 
@@ -70,7 +77,8 @@ class MyApp extends StatelessWidget {
                 ? locale
                 : const Locale('en', '');
           },*/
-            themeMode: ThemeMode.system,
+            themeMode: ThemeMode.light,
+            //themeMode: ThemeMode.system,
             theme: AppColors.lightTheme,
             darkTheme: AppColors.darkTheme,
           );

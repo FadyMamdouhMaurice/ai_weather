@@ -1,9 +1,9 @@
-import 'package:ai_weather/core/theme/colors.dart';
+import 'package:ai_weather_cellula/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 Widget myTextFeild({
   Iterable<String>? autofill,
-  required TextEditingController controller,
+  TextEditingController? controller,
   required TextInputType keyboardType,
   required String lableText,
   IconData? suffixIcon,

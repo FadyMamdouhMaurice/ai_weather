@@ -1,4 +1,4 @@
-import 'package:ai_weather/features/auth/domain/entities/user.dart';
+import 'package:ai_weather_cellula/features/auth/domain/entities/user.dart';
 
 class UserModel extends UserEntity {
   UserModel({

@@ -1,4 +1,4 @@
-import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
+import 'package:ai_weather_cellula/core/theme/gradient_theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -18,7 +18,8 @@ class AppColors {
   static const gradientColor1 = Color(0xFFFFFFFF);
   static const gradientColor2 = Color(0xFF4EA3DB);
   static const gradientColor3 = Color(0xFF00488A);
-
+  static const whiteColor = Color(0xFFFFFFFF);
+  static const sunshineColor = Color(0xFFF5FE49);
   // Light theme configuration
   static ThemeData lightTheme = ThemeData(
     primaryColor: primaryColor,

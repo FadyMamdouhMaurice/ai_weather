@@ -1,14 +1,15 @@
-import 'package:ai_weather/core/localization/app_localizations.dart';
-import 'package:ai_weather/core/theme/colors.dart';
-import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
-import 'package:ai_weather/features/auth/presentation/blocs/auth_bloc.dart';
-import 'package:ai_weather/features/auth/presentation/blocs/auth_state.dart';
-import 'package:ai_weather/features/auth/presentation/viewmodels/register_viewmodel.dart';
+import 'package:ai_weather_cellula/core/localization/app_localizations.dart';
+import 'package:ai_weather_cellula/core/theme/colors.dart';
+import 'package:ai_weather_cellula/core/theme/gradient_theme_extension.dart';
+import 'package:ai_weather_cellula/features/auth/domain/entities/user.dart';
+import 'package:ai_weather_cellula/features/auth/presentation/blocs/auth_bloc.dart';
+import 'package:ai_weather_cellula/features/auth/presentation/blocs/auth_event.dart';
+import 'package:ai_weather_cellula/features/auth/presentation/blocs/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ai_weather/core/components/button.dart';
-import 'package:ai_weather/core/components/textfeild.dart';
-import 'package:ai_weather/features/auth/presentation/blocs/password_visibility_cubit.dart';
+import 'package:ai_weather_cellula/core/components/button.dart';
+import 'package:ai_weather_cellula/core/components/textfeild.dart';
+import 'package:ai_weather_cellula/features/auth/presentation/blocs/password_visibility_cubit.dart';
 import 'package:go_router/go_router.dart';
 
 class SignupPage extends StatelessWidget {
@@ -18,7 +19,6 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final gradientTheme = theme.extension<GradientThemeExtension>();
-    final viewModel = context.watch<RegisterViewModel>();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -37,11 +37,16 @@ class SignupPage extends StatelessWidget {
           if (state is Authenticated) {
             GoRouter.of(context).go('/weather'); // Navigate to WeatherPage
           }
+          if (state is AuthError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
         },
         child: Container(
           decoration: BoxDecoration(
             gradient:
-                gradientTheme?.backgroundGradient, // Get gradient from theme
+            gradientTheme?.backgroundGradient, // Get gradient from theme
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -49,59 +54,73 @@ class SignupPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        myTextFeild(
-                          controller: viewModel.nameController,
-                          keyboardType: TextInputType.text,
-                          lableText: AppLocalizations.of(context)!.translate('Name'),
-                        ),
-                        myTextFeild(
-                          controller: viewModel.emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          lableText: AppLocalizations.of(context)!.translate('Email'),
-                        ),
-                        const SizedBox(height: 16),
-                        BlocBuilder<PasswordVisibilityCubit, bool>(
-                          builder: (context, isPasswordObscure) {
-                            return myTextFeild(
-                              controller: viewModel.passwordController,
-                              keyboardType: TextInputType.visiblePassword,
-                              lableText:
-                                  AppLocalizations.of(context)!.translate('Password'),
-                              isObscure: isPasswordObscure,
-                              suffixIcon:
-                              isPasswordObscure ? Icons.visibility_off : Icons.visibility,
-                              onSuffixIconTap: () => context
-                                  .read<PasswordVisibilityCubit>()
-                                  .toggleVisibility(),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        BlocBuilder<ConfirmPasswordVisibilityCubit, bool>(
-                          builder: (context, isConfirmPasswordObscure) {
-                            return myTextFeild(
-                              controller: viewModel.confirmPasswordController,
-                              keyboardType: TextInputType.visiblePassword,
+                    child: BlocBuilder<AuthBloc, AuthState>(
+                      builder: (BuildContext context, AuthState state) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            myTextFeild(
+                              onChanged: (value) => context.read<AuthBloc>().add(NameChanged(value)),
+                              keyboardType: TextInputType.text,
                               lableText: AppLocalizations.of(context)!
-                                  .translate('ConfirmPassword'),
-                              isObscure: isConfirmPasswordObscure,
-                              suffixIcon:
-                              isConfirmPasswordObscure ? Icons.visibility_off : Icons.visibility,
-                              onSuffixIconTap: () => context
-                                  .read<ConfirmPasswordVisibilityCubit>()
-                                  .toggleVisibility(),
-                            );
-                          },
-                        ),
-                        myTextFeild(
-                          controller: viewModel.phoneController,
-                          keyboardType: TextInputType.phone,
-                          lableText: AppLocalizations.of(context)!.translate('Phone'),
-                        ),
-                      ],
+                                  .translate('Name'),
+                            ),
+                            myTextFeild(
+                              onChanged: (value) => context.read<AuthBloc>().add(EmailChanged(value)),
+                              keyboardType: TextInputType.emailAddress,
+                              lableText: AppLocalizations.of(context)!
+                                  .translate('Email'),
+                            ),
+                            const SizedBox(height: 16),
+                            BlocBuilder<PasswordVisibilityCubit, bool>(
+                              builder: (context, isPasswordObscure) {
+                                return myTextFeild(
+                                  onChanged: (value) => context.read<AuthBloc>().add(PasswordChanged(value)),
+                                  keyboardType: TextInputType.visiblePassword,
+                                  lableText:
+                                  AppLocalizations.of(context)!.translate(
+                                      'Password'),
+                                  isObscure: isPasswordObscure,
+                                  suffixIcon:
+                                  isPasswordObscure
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  onSuffixIconTap: () =>
+                                      context
+                                          .read<PasswordVisibilityCubit>()
+                                          .toggleVisibility(),
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            BlocBuilder<ConfirmPasswordVisibilityCubit, bool>(
+                              builder: (context, isConfirmPasswordObscure) {
+                                return myTextFeild(
+                                  onChanged: (value) => context.read<AuthBloc>().add(ConfirmPasswordChanged(value)),
+                                  keyboardType: TextInputType.visiblePassword,
+                                  lableText: AppLocalizations.of(context)!
+                                      .translate('ConfirmPassword'),
+                                  isObscure: isConfirmPasswordObscure,
+                                  suffixIcon:
+                                  isConfirmPasswordObscure ? Icons
+                                      .visibility_off : Icons.visibility,
+                                  onSuffixIconTap: () =>
+                                      context
+                                          .read<
+                                          ConfirmPasswordVisibilityCubit>()
+                                          .toggleVisibility(),
+                                );
+                              },
+                            ),
+                            myTextFeild(
+                              onChanged: (value) => context.read<AuthBloc>().add(PhoneChanged(value)),
+                              keyboardType: TextInputType.phone,
+                              lableText: AppLocalizations.of(context)!
+                                  .translate('Phone'),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -116,7 +135,23 @@ class SignupPage extends StatelessWidget {
                     }
                     return myButton(
                       //onPressed: viewModel.isFormValid ? viewModel.register : null,
-                      onPressed: viewModel.register,
+                      onPressed: () {
+                        final state = context.read<AuthBloc>().state;
+                        if (state is RegisterFormState && state.isFormValid) {
+                          final user = UserEntity(
+                            userId: '',
+                            name: state.name,
+                            email: state.email,
+                            phone: state.phone,
+                          );
+
+                          context.read<AuthBloc>().add(RegisterEvent(user, state.password));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Please fill in all required fields correctly.')),
+                          );
+                        }
+                      },
                       text: AppLocalizations.of(context)!.translate('SignUp'),
                     );
                   },

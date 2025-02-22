@@ -8,5 +8,15 @@
   "ConfirmPassword": "تأكيد كلمة المرور",
   "Phone": "رقم الهاتف",
   "Login": "تسجيل الدخول",
-  "Register": "تسجيل"
+  "Register": "تسجيل",
+  "weather_page": "صفحة الطقس",
+  "enter_city_name": "أدخل اسم المدينة",
+  "failed_to_load_weather": "فشل في تحميل الطقس",
+  "today": "اليوم",
+  "tomorrow": "غداً",
+  "clear": "صافي",
+  "rainy": "ممطر",
+  "cloudy": "غائم",
+  "snow": "ثلج",
+  "thunderstorm": "عاصفة رعدية"
 }

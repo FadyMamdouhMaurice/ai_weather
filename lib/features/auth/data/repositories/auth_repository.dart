@@ -1,4 +1,4 @@
-import 'package:ai_weather/features/auth/data/models/user_model.dart';
+import 'package:ai_weather_cellula/features/auth/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

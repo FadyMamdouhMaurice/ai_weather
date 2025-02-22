@@ -8,5 +8,15 @@
   "ConfirmPassword" : "Confirm Password",
   "Phone": "Phone",
   "Login": "Login",
-  "Register": "Register"
+  "Register": "Register",
+  "weather_page": "Weather Page",
+  "enter_city_name": "Enter City Name",
+  "failed_to_load_weather": "Failed to load weather",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "clear": "Clear",
+  "rainy": "Rainy",
+  "cloudy": "Cloudy",
+  "snow": "Snow",
+  "thunderstorm": "Thunderstorm"
 }

@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:ai_weather/main.dart';
+import 'package:ai_weather_cellula/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -17,6 +17,7 @@ void main() {
     final sharedPreferences = await SharedPreferences.getInstance();
 
     await tester.pumpWidget(MyApp(sharedPreferences: sharedPreferences,));
+
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -1,4 +1,4 @@
-import 'package:ai_weather/core/helper/cache_helper.dart';
+import 'package:ai_weather_cellula/core/helper/cache_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserBloc extends Cubit<int?> {

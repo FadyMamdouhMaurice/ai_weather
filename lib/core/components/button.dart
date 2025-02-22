@@ -1,4 +1,4 @@
-import 'package:ai_weather/core/theme/colors.dart';
+import 'package:ai_weather_cellula/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 Widget myButton({

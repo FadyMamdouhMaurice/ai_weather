@@ -1,6 +1,6 @@
 {
-    "name": "ai_weather",
-    "short_name": "ai_weather",
+    "name": "ai_weather_cellula",
+    "short_name": "ai_weather_cellula",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

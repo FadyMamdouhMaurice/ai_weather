@@ -1,4 +1,4 @@
-import 'package:ai_weather/core/utils/strings.dart';
+import 'package:ai_weather_cellula/core/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {

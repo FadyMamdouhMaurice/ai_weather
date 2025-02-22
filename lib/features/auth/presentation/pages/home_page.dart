@@ -1,6 +1,6 @@
-import 'package:ai_weather/core/components/button.dart';
-import 'package:ai_weather/core/localization/app_localizations.dart';
-import 'package:ai_weather/core/theme/gradient_theme_extension.dart';
+import 'package:ai_weather_cellula/core/components/button.dart';
+import 'package:ai_weather_cellula/core/localization/app_localizations.dart';
+import 'package:ai_weather_cellula/core/theme/gradient_theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

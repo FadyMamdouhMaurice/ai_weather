@@ -30,6 +30,8 @@ class AppLocalizations {
   String translate(String key) {
     return _localizedStrings?[key] ?? '** $key not found';
   }
+
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -47,4 +49,10 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+extension WeatherLocalization on AppLocalizations {
+  String translateCondition(String condition) {
+    return translate(condition.toLowerCase()); // Fetch from JSON
+  }
 }
